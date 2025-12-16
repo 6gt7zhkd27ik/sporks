@@ -15,5 +15,4 @@ url = f"https://www.duckdns.org/update?domains={DUCKDNS_DOMAIN}&token={DUCKDNS_T
 with urllib.request.urlopen(url) as response:
     print("DuckDNS response:", response.read().decode())
 
-webbrowser.open(f"http://localhost:{PORT}")
 socketserver.TCPServer(("", PORT), http.server.SimpleHTTPRequestHandler).serve_forever()
