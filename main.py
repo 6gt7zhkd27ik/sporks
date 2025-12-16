@@ -7,12 +7,15 @@ import os
 DUCKDNS_DOMAIN = "stlckmacsterluke"
 DUCKDNS_TOKEN = os.getenv("TOKEN")
 PORT = 8000
+SITE_DIR = os.path.abspath("./site")
 
 if not DUCKDNS_TOKEN:
-    raise ValueError("No TOKEN!")
+    raise ValueError("Environment variable TOKEN not set!")
 
 url = f"https://www.duckdns.org/update?domains={DUCKDNS_DOMAIN}&token={DUCKDNS_TOKEN}&ip="
 with urllib.request.urlopen(url) as response:
     print("DuckDNS response:", response.read().decode())
 
+os.chdir(SITE_DIR)
+webbrowser.open(f"http://localhost:{PORT}")
 socketserver.TCPServer(("", PORT), http.server.SimpleHTTPRequestHandler).serve_forever()
